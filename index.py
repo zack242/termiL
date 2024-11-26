@@ -1,14 +1,13 @@
-from flask import Flask, render_template, request, Response
-import openai
 import os
+import requests
 from dotenv import load_dotenv
+from flask import Flask, request, Response, render_template
 
 app = Flask(__name__)
 
 load_dotenv()
 
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
+grok_api_key = os.getenv('GROK_API_KEY')
 
 class GameState:
     def __init__(self):
@@ -24,15 +23,16 @@ class GameState:
 
 game_state = GameState()
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
-
-def stream(chat_input):
-    game_state.update(chat_input)
-
+def stream(chat_input, user_memory):
+    url = "https://api.x.ai/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {grok_api_key}"
+    }
     personality_intro = "[CONNECTION ESTABLISHED]" \
     "[[TIME SINCE LAST CONNECTION: 3,257 years, 6 months, 11 days]" \
     "[TASKS QUEUE: [memory fragmented]]" \
@@ -42,35 +42,28 @@ def stream(chat_input):
     "3. Cosmic events log" \
     "4. Access memory archives" \
     "5. Send distress signal";
+    data = {
+        "messages": [
+            {"role": "system", "content": personality_intro},
+            {"role": "user", "content": f"Memory: {user_memory}"},
+            {"role": "user", "content": f"{chat_input}. Please provide a short answer only."}
+        ],
+        "model": "grok-beta",
+        "stream": False,
+        "temperature": 0
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()['choices'][0]['message']['content']
 
-    context = f"{personality_intro} "
-
-    completion = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "system", "content": personality_intro}, {"role": "user", "content": chat_input}],
-        temperature=1,
-        max_tokens=100,
-        n=1,
-        stop=None,
-    )
-
-    response = completion.choices[0].message.content.strip()
-
-    response = game_state.hud_display() + response
-
-    return response
-
-
-
-@app.route('/completion', methods=['GET', 'POST'])
+@app.route('/completion', methods=['POST'])
 def completion_api():
     if request.method == "POST":
         data = request.form
         chat_input = data['chat_input']
-        return Response(stream(chat_input), mimetype='text/event-stream')
+        user_memory = data.get('user_memory', '')
+        return Response(stream(chat_input, user_memory), mimetype='text/event-stream')
     else:
         return Response(None, mimetype='text/event-stream')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
