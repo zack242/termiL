@@ -52,8 +52,13 @@ def stream(chat_input, user_memory):
         "stream": False,
         "temperature": 0
     }
-    response = requests.post(url, headers=headers, json=data)
-    return response.json()['choices'][0]['message']['content']
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        return response.json()['choices'][0]['message']['content']
+    except requests.exceptions.RequestException as e:
+        app.logger.error(f"API request failed: {e}")
+        return "An error occurred while processing your request."
 
 @app.route('/completion', methods=['POST'])
 def completion_api():
