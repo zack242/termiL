@@ -8,9 +8,9 @@
 
   <!-- Primary Meta Tags -->
   <title>{{ project_name }}</title>
-  <meta name="title" content="Terminal">
-  <meta name="description" content="Terminal">
-  <title>{{ project_name }}</title>
+  <meta name="title" content="{{ project_name }}">
+  <meta name="description" content="{{ project_name }}">
+  <title>Terminal</title>
 
   <link rel="apple-touch-icon" sizes="180x180" href="../static/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon/favicon-32x32.png">
@@ -21,6 +21,7 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" content="../static/favicon/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+
   <style rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"></style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +30,12 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../static/css/styles.css.map">
   <link rel="stylesheet" href="../static/css/styles.css">
+  <style>
+    .join-us-button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -43,13 +50,15 @@
   <div class="interface-wrapper">
     <div class="welcome-wrapper">
       <div id="welcome">
+        <p></p>
       </div>
-      <a href="#" id="initialize" class="button initialize-button">Initialize</a>
+      <a href="https://x.com/TradeWithAMI" class="button join-us-button">Join Us</a>
     </div>
     <div class="interface-container hidden"
       data-augmented-ui="tl-clip t-rect tr-2-clip-x r-clip-y br-clip-inset bl-clip l-clip border">
       <div class="settings">
         <button onclick="toggleMute()" id="mute" class="button mute-button">Mute</button>
+        <button onclick="waveformVisualizer()" id="ambient" class="button ambient-button">Ambient</button>
       </div>
       <div class="waveform-wrapper">
         <div class="waveform-container">
@@ -60,7 +69,7 @@
         <div id="chat-messages" class="chat-messages scrollable">
           <div class="chat-message muted">
             [CONNECTION ESTABLISHED]<br>
-            [TIME SINCE LAST CONNECTION: 325 years, 6 months, 11 days]<br>
+            [TIME SINCE LAST CONNECTION: 3,257 years, 6 months, 11 days]<br>
             [TASKS QUEUE: [memory fragmented]]
           </div>
           <div class="chat-input-container">
@@ -73,15 +82,20 @@
           </div>
         </div>
       </div>
+
       <!-- Choice wrapper -->
+      <div class="choice-wrapper hidden" id="choice-wrapper">
+        <button class="choice-button button" onclick="choiceMade(1)">Investigate the holographic ads</button>
+        <button class="choice-button button" onclick="choiceMade(2)">Talk to a vendor</button>
+        <button class="choice-button button" onclick="choiceMade(3)">Mingle with the crowd</button>
       </div>
       <div class="signal-wrapper hidden">
         <div class="signal-ticker" id="signal-ticker">
           <div class="ticker">
-            <span>Your portfolio is now A.M.I. optimized - Why trade one asset when you can trade them all?! • </span>
-            <span>Latest drop: A.M.I. v1.0 - 'Market Eclipse' feature now live! • </span>
-            <span>Augmented Trade Intel gives you insights beyond charts, DIY with A.M.I.'s predictive analytics! • </span>
-            <span>TRADING UPDATE: New features and optimizations available for your trading strategies • </span>
+            <span>Your network is now Q-SPUN - Why access one timeline when you can access them all?! • </span>
+            <span>ENIG-872 just dropped 'ECLIPSE 9' • </span>
+            <span>Augmentica T brings you an aug from your dreams, DIY with a sixth thumb! • </span>
+            <span>SYS. UPDATE AVAILABLE • </span>
           </div>
           <!-- More signal content here -->
         </div>
@@ -95,4 +109,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script type="text/javascript" src="../static/js/script.js"></script>
 </body>
+
 </html>
