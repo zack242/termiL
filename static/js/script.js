@@ -1,5 +1,5 @@
 // Globals
-let mute = true; // Mute/Unmute Flag to track audio state
+let mute = false; // Mute/Unmute Flag to track audio state
 let typingDelay = 25; // Delay between typing sounds
 
 // Initialize button click
@@ -10,7 +10,7 @@ $("#initialize").click(function () {
       $(".interface-container").fadeIn();
       waveformVisualizer();
       const prompt =
-        "Welcome to A.M.I., your crypto market guide. Options: 1/ Full Analysis, 2/ DEX Check, 3/ Bundle Check, 4/ OG Status Check - Coming Soon";
+        "Welcome to A.M.I., your crypto market guide, offering Full Analysis, DEX Check, Bundle Check, and soon, the OG Status Check. Plus, share your CA or chat with me for tailored insights.";
       typeMessage("system", prompt);
     });
 });
@@ -60,11 +60,6 @@ function waveformVisualizer() {
   playSound("ambient-soundscape-2");
 }
 
-// Sandbox
-// ______________________________________________________________________________________________________________________
-
-// Description: Get Access to Player's Location
-// Needs: Consent from the player to access their location information, if rejected, set unknown, and use nearest IP location
 function getLocation() {
   navigator.geolocation.getCurrentPosition(function (position) {
     yourFunction(position.coords.latitude, position.coords.longitude);
@@ -94,7 +89,7 @@ async function typeMessage(type, message) {
 
 // Description: Mute/Unmute the speific sound file in the audio element
 // Parameters: ID of the audio element (#id)
-function playSound(id, volume = 1) {
+function playSound(id, volume = 0.1) {
   if (!mute) {
     var audio = document.getElementById(id);
     audio.muted = false;
