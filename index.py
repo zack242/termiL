@@ -46,7 +46,10 @@ def stream(chat_input, user_memory):
     if match:
         contract_address = match.group(0)
         dex_result = check_dex_paid(contract_address)
-        chat_input = f"Contract Address: {contract_address}\n{dex_result}"
+        bundle_resule = test_fetch_bundle_info(contract_address)
+        
+        chat_input = f"Contract Address: {contract_address}\n{dex_result},{bundle_resule}"
+        
         
 
     data = {
@@ -151,19 +154,21 @@ def test_fetch_bundle_info(contract_address):
     total_percentage_bundled = data.get("total_percentage_bundled", "N/A")
     total_sol_spent = data.get("total_sol_spent", "N/A")
 
-    print(f"Ticker: {ticker}")
-    print(f"Total Bundles: {total_bundles}")
-    print(f"Total Holding Amount: {total_holding_amount}")
-    print(f"Total Holding Percentage: {total_holding_percentage}")
-    print(f"Total Percentage Bundled: {total_percentage_bundled}")
-    print(f"Total SOL Spent: {total_sol_spent}")
+    result = (f"Ticker: {ticker}\n"
+              f"Total Bundles: {total_bundles}\n"
+              f"Total Holding Amount: {total_holding_amount}\n"
+              f"Total Holding Percentage: {total_holding_percentage}\n"
+              f"Total Percentage Bundled: {total_percentage_bundled}\n"
+              f"Total SOL Spent: {total_sol_spent}\n")
 
     for bundle in data.get("bundles", []):
         if isinstance(bundle, dict):
             token_percentage = bundle.get("token_percentage", "N/A")
             unique_wallets = bundle.get("unique_wallets", "N/A")
-            print(f"Bundle Token Percentage: {token_percentage}")
-            print(f"Unique Wallets: {unique_wallets}")
+            result += (f"Bundle Token Percentage: {token_percentage}\n"
+                       f"Unique Wallets: {unique_wallets}\n")
+
+    return result
 
 @app.route('/completion', methods=['POST'])
 def completion_api():
