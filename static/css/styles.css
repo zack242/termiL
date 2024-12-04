@@ -145,7 +145,7 @@ body {
 .welcome-wrapper #welcome {
   font-size: 2.5em;
   line-height: 1.8em;
-  padding-bottom: 3em;
+  padding: 1.5em;
 }
 .welcome-wrapper .initialize-button {
   text-align: center;

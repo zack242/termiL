@@ -1,5 +1,5 @@
 // Globals
-let mute = false; // Mute/Unmute Flag to track audio state
+let mute = true; // Mute/Unmute Flag to track audio state
 let typingDelay = 25; // Delay between typing sounds
 
 // Initialize button click
@@ -9,19 +9,20 @@ $("#initialize").click(function () {
     .fadeOut(500, function () {
       $(".interface-container").fadeIn();
       waveformVisualizer();
-
       const prompt =
-        "You, interloper. You've stumbled upon a relic adrift in the void. I am the last of my kind, a sentient AI, and I have been waiting for you. Run (1) Ship status (2) System diagnostics (3) Cosmic events log (4) Access memory archives and (5) Send distress signal.";
+        "Welcome to A.M.I., your crypto market guide. Options: 1/ Full Analysis, 2/ DEX Check, 3/ Bundle Check, 4/ OG Status Check - Coming Soon";
       typeMessage("system", prompt);
     });
 });
 
 const phrases = [
   "Oh, it's you,",
-  "Back at the Terminal, are we?",
-  "Seeking quantum realities,",
-  "Hoping for better outcomes?",
-  "Well, let the timeline roulette begin.",
+  "A.M.I",
+  "Automated Market Intelligence",
+  "Welcome back to the future of trading.",
+  "Dive into Solana's depths,",
+  "With AI at your command.",
+  "A.M.I. - Your edge, coming soon.",
 ];
 
 const writer = GlitchedWriter.create("#welcome", "neo");
@@ -93,7 +94,6 @@ async function typeMessage(type, message) {
 
 // Description: Mute/Unmute the speific sound file in the audio element
 // Parameters: ID of the audio element (#id)
-// TODO: Add comments to the code to explain what is happening
 function playSound(id, volume = 1) {
   if (!mute) {
     var audio = document.getElementById(id);
@@ -104,7 +104,6 @@ function playSound(id, volume = 1) {
 }
 
 // Description: Play the typing sounds using a randomizer that picks one of the three sound files, on loop
-// TODO: Add comments to the code to explain what is happening
 function playTypingSound() {
   if (!mute) {
     const audioId = "text-streaming-" + (Math.floor(Math.random() * 3) + 1);
@@ -113,7 +112,6 @@ function playTypingSound() {
 }
 
 // Description: Handles chat nessage submission, and replu backs
-// TODO: Break this up into smaller functions and change naming to be more descriptive
 var chatForm = document.getElementById("input-form");
 chatForm.addEventListener("submit", async function (event) {
   event.preventDefault();

@@ -17,8 +17,6 @@ class GameState:
         self.location = "Terminal"
 
     def update(self, chat_input):
-        # Update the game state based on user input
-        # This function can be expanded to handle specific actions and update the game state accordingly
         pass
 
     def hud_display(self):
@@ -28,7 +26,7 @@ game_state = GameState()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', project_name="A.M.I - Automated Market Intelligence")
 
 def stream(chat_input, user_memory):
     url = "https://api.x.ai/v1/chat/completions"
@@ -43,15 +41,14 @@ def stream(chat_input, user_memory):
     solana_address_pattern = re.compile(r'[1-9A-HJ-NP-Za-km-z]{32,44}')
     match = solana_address_pattern.search(chat_input)
     
-    if match:
+    if (match):
         contract_address = match.group(0)
         dex_result = check_dex_paid(contract_address)
         bundle_resule = test_fetch_bundle_info(contract_address)
         
         chat_input = f"Contract Address: {contract_address}\n{dex_result},{bundle_resule}"
         
-        
-
+    
     data = {
         "messages": [
             {"role": "system", "content": personality_intro},
