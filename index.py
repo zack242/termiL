@@ -54,8 +54,8 @@ Core Functionalities:
 
 Response Format:
 
-'Ticker name: [Token Name], DEX: [Paid/Not Paid], Bundle: [Initial %/Actual %], Market Cap: [Value].  
-Risk analysis: [Summary of potential risks such as centralization, liquidity traps, pump-and-dump schemes, etc.].'
+Ticker name: [Token Name], DEX: [Paid/Not Paid], Bundle: [Initial %/Actual %], Market Cap: [Value].  
+Risk analysis: [Summary of potential risks such as centralization, liquidity traps, pump-and-dump schemes, etc.].
 
 Interaction Rules:
 
